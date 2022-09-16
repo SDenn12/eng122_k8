@@ -22,3 +22,44 @@ K8s clusters allow engineers to orchestrate and monitor containers across multip
 ### Controller Node
 
 - Allows for the management of all of the agent nodes (using kubectl)
+
+## Create Nginx Deployment
+
+```
+# K8 works with API versions to declare the resources
+# We have to declare the api version and the kind of service/component
+# Services: deployment, service, pods, replicasets, crobjob, autoscalinggroup, horizozontalscaling
+
+# kubectl get service_name - deployment - pods - rs
+# kubectl get deploy nginx_deploy 
+# kubectl get pods
+# kubectl describe pod pod_name
+# kubectl delete svc svc_name
+# kubectl delete pod pod_name
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  
+  replicas: 3
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-deploy
+        image: sdennis3141/eng122_website:v1.1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+```
